@@ -5,7 +5,8 @@ public class ClientMain {
     public static void main(String[] args) {
         try {
             new EchoClient();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
     }

@@ -31,7 +31,6 @@ public class EchoClient extends JFrame {
         dis = new DataInputStream(socket.getInputStream());
         dos = new DataOutputStream(socket.getOutputStream());
 
-
         new Thread(() -> {
             try {
                 while (true) {
