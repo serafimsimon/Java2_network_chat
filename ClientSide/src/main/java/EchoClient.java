@@ -20,7 +20,6 @@ public class EchoClient extends JFrame {
 
     private Socket socket;
 
-
     public EchoClient() throws IOException {
         connectionToServer();
         prepareGUI();
@@ -35,57 +34,57 @@ public class EchoClient extends JFrame {
             try {
                 while (true) {
                     String fromServer = dis.readUTF();
-                    if (fromServer.equalsIgnoreCase("/finish")){
-                        break;}
-                    chatArea.append(fromServer + "\n");
+                    if (fromServer.equalsIgnoreCase("/finish")) {
+                        break;
                     }
+                    chatArea.append(fromServer + "\n");
                 }
-            catch(Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Wrong connection to server");
+                JOptionPane.showMessageDialog(null, "Потеряно соединение с сревером!");
             }
 
         }).start();
     }
 
-    private void sendMessageToServer(){
-    String msg = msgInputField.getText();
-    if (msg != null && !msg.trim().isEmpty()){
-       try{
-           dos.writeUTF(msg);
-           msgInputField.setText("");
-           msgInputField.grabFocus();
-    } catch (IOException e){
-       e.printStackTrace();
-       JOptionPane.showMessageDialog(null, "You send incorrect message");
+    private void sendMessageToServer() {
 
-       }
-    }
-    }
+        String msg = msgInputField.getText();
 
-    private void closeConnection(){
-    try {
-        dis.close();
-    }
-    catch (IOException e) {
-        e.printStackTrace();
+        if (msg != null && !msg.trim().isEmpty()) {
+            try {
+
+                dos.writeUTF(msg.toString());
+                msgInputField.setText("");
+                msgInputField.grabFocus();
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Некорректное сообщение!");
+            }
+        }
     }
 
-    try {
-        dos.close();
-    }
-    catch (IOException e) {
-        e.printStackTrace();
-    }
+    private void closeConnection() {
+        try {
+            dis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-    try {
-        socket.close();
-    }
-    catch (IOException e){
-        e.printStackTrace();
-    }
-    }
+        try {
+            dos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void prepareGUI() {
         // Параметры окна
@@ -127,7 +126,7 @@ public class EchoClient extends JFrame {
                 try {
                     dos.writeUTF("/finish");
                     closeConnection();
-                }catch (IOException ioException){
+                } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
             }
